@@ -1,4 +1,5 @@
-export const USER_TOKEN = 'x-access';
+const API_KEY = 'AIzaSyApT0TWIpUvJCJVuPrrZ0MzG59uSkS3Zkk';
+
 export const apiTypes = {
   GET: 'GET',
   POST: 'POST',
@@ -7,24 +8,25 @@ export const apiTypes = {
   DELETE: 'DELETE'
 };
 
-export function apiCall(url, type = apiTypes.GET, body = null, useAuth = false) {
-  const headers = {
-    'Content-Type': 'application/json'
-  };
-  if(useAuth){
-    headers[USER_TOKEN] = JSON.parse(localStorage.getItem(USER_TOKEN));
-  }
+loadYoutubeApi();
+export function loadYoutubeApi() {
+  const script = document.createElement("script");
+  script.src = "https://apis.google.com/js/client.js";
 
-  return fetch(url, {
-    method: type,
-    credentials: 'include',
-    headers: headers,
-    body: (body) ? JSON.stringify(body) : body
-  })
-    .then(function(data) {
-      return data.json();
-    })
-    .catch((error) => {
-      return error.json();
+  script.onload = () => {
+    gapi.load('client', () => {
+      gapi.client.setApiKey(API_KEY);
+      gapi.client.load('youtube', 'v3');
     });
+  };
+  document.body.appendChild(script);
+}
+
+export function apiCall(keywords) {
+  return gapi.client.youtube.search.list({
+    part: 'snippet',
+    type: 'video',
+    maxResults: 20,
+    g: keywords
+  });
 }

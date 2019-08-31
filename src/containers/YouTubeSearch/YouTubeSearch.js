@@ -4,7 +4,7 @@ import Search from '../../components/Search/Search';
 
 import {inject, observer} from 'mobx-react';
 
-@inject('appStore')
+@inject('appStore', 'youTubeStore')
 @observer
 class YouTubeSearch extends Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class YouTubeSearch extends Component {
     this.searchHandler = this.searchHandler.bind(this);
   }
 
-  searchHandler(value){
-    console.log('SEARCH FOR::', value);
+  searchHandler(value) {
+    this.props.youTubeStore.searchVideos(value);
   }
 
   render() {
@@ -26,6 +26,9 @@ class YouTubeSearch extends Component {
 YouTubeSearch.propTypes = {
   appStore: PropTypes.shape({
     searchTitle: PropTypes.string
+  }),
+  youTubeStore: PropTypes.shape({
+    searchVideos: PropTypes.func
   })
 };
 
