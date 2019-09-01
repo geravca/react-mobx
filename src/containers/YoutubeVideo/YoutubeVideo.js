@@ -20,7 +20,7 @@ export default class YoutubeVideo extends Component {
     if (this.props.youTubeStore.currentVideo) {
       return (
         <div className="container">
-          <VideoDetails id={this.props.id} video={this.props.youTubeStore.currentVideo.snippet}/>
+          <VideoDetails id={this.props.id} currentVideo={this.props.youTubeStore.currentVideo}/>
           <CommentList list={this.props.youTubeStore.videoComments}/>
         </div>
 

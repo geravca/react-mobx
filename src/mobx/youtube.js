@@ -3,9 +3,9 @@ import {getList, getCurrentVideo, getVideoComments} from '../utils/api';
 
 export default class YouTube {
   @observable list = []; // list of the videos retrieved
-  @observable isError = false;
-  @observable currentVideo = null;
-  @observable videoComments = [];
+  @observable isError = false; // erros while searching
+  @observable currentVideo = null; // current video object
+  @observable videoComments = []; // comments from current video
 
   @action
   /**
@@ -27,6 +27,10 @@ export default class YouTube {
   }
 
   @action
+  /**
+   * @description get video details per given video ID. The video ID is extracted from url params
+   * @param   {string} videoId
+   */
   async getVideoDetails(videoId) {
     try {
       const data = await getCurrentVideo(videoId);
@@ -37,6 +41,11 @@ export default class YouTube {
     }
   }
 
+  /**
+   * @description get comments from a particular video (VideoId)
+   * @param   {string} videoId
+   * @returns {Promise<void>}
+   */
   @action async getComments(videoId){
     try {
       const data = await getVideoComments(videoId);
