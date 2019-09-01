@@ -4,6 +4,7 @@ import {Container} from 'reactstrap';
 import Header from '../../components/Header/Header';
 import {Route, Switch} from 'react-router-dom';
 import Home from '../../routes/Home/Home';
+import Video from '../../routes/Video/Video';
 
 export default class App extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class App extends Component {
           <Header/>
           <Container fluid className={styles.appContents}>
             <Switch>
-              <Route path="/" component={Home}/>
+              <Route exact name="Home" path="/" component={Home}/>
+              <Route exact name="Video" path="/:id" component={Video}/>
             </Switch>
           </Container>
         </Container>

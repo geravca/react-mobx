@@ -2,28 +2,64 @@ import {action, observable} from 'mobx';
 import {apiCall} from '../utils/api';
 
 export default class YouTube {
-  @observable currentVideo = null;
-  @observable list = [];
+  @observable list = []; // list of the videos retrieved
   @observable isError = false;
-  @observable loading = false;
 
   @action
+  /**
+   * @name searchVideos
+   * @description search youtube videos from given keyword, if no keyword, empties the list
+   */
   async searchVideos(keywords) {
     if (keywords.length > 0) {
-      this.loading = true;
       try {
         const data = await apiCall(keywords);
         this.isError = false;
-        this.loading = false;
         this.list = data.result.items.map((video) => {
           return {...video.snippet, ...video.id};
         });
       } catch (error) {
         this.isError = true;
-        this.loading = false;
       }
     } else {
       this.list = [];
+    }
+  }
+
+  @action
+  /**
+   * @name getVideo
+   * @description get video data from given id, if found, store it in session storage, else get data from the storage
+   * @param videoId
+   * @returns {(any | undefined)|*}
+   */
+  getVideo(videoId) {
+    let video = null;
+    if (this.list.length > 0) {
+      // assing the video data to the variable to return
+      video = this.currentVideo = this.list.find((video) => {
+        return video.videoId === videoId;
+      });
+      // store the video in session, no matters if found
+      this.storeVideo(true, video);
+    } else {
+      const videoFromSession = this.storeVideo();
+      // check if the loaded video, if so, has the same given id
+      if (videoFromSession && videoFromSession.videoId === videoId) {
+        video = videoFromSession;
+      }
+    }
+
+    return video;
+  }
+
+  storeVideo(set = false, data = null) {
+    if (set) {
+      // save the session data
+      sessionStorage.setItem('ytVideo', JSON.stringify(data));
+    } else {
+      // retrieve the session data
+      return JSON.parse(sessionStorage.getItem('ytVideo'));
     }
   }
 }

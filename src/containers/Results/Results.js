@@ -4,7 +4,9 @@ import {inject, observer} from 'mobx-react';
 
 import styles from './Results.scss';
 import ResultItem from '../../components/ResultItem/ResultItem';
+import {withRouter} from 'react-router-dom';
 
+@withRouter
 @inject('youTubeStore')
 @observer
 export default class Results extends Component {
@@ -15,7 +17,7 @@ export default class Results extends Component {
   }
 
   videoClickHandler(id) {
-    console.log('SELECTED ID', id);
+    this.props.history.replace(`/${id}`)
   }
 
   renderResults() {
