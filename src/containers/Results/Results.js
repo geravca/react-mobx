@@ -26,11 +26,12 @@ export default class Results extends Component {
 
     if (videoList && videoList.length > 0) {
       videoUi = [];
-      videoList.forEach((video, index) => {
+      videoList.forEach((item, index) => {
+        const video = item.snippet;
         //console.log(JSON.parse(JSON.stringify(video)));
         videoUi.push(
           <ResultItem key={index}
-                      id={video.videoId}
+                      id={item.id.videoId}
                       img={video.thumbnails.medium.url}
                       title={video.title}
                       description={video.description}

@@ -15,9 +15,7 @@ export default class YouTube {
       try {
         const data = await apiCall(keywords);
         this.isError = false;
-        this.list = data.result.items.map((video) => {
-          return {...video.snippet, ...video.id};
-        });
+        this.list = data.result.items;
       } catch (error) {
         this.isError = true;
       }
@@ -37,19 +35,20 @@ export default class YouTube {
     let video = null;
     if (this.list.length > 0) {
       // assing the video data to the variable to return
-      video = this.currentVideo = this.list.find((video) => {
-        return video.videoId === videoId;
+      video = this.list.find((video) => {
+        return video.id.videoId === videoId;
       });
       // store the video in session, no matters if found
       this.storeVideo(true, video);
     } else {
       const videoFromSession = this.storeVideo();
       // check if the loaded video, if so, has the same given id
-      if (videoFromSession && videoFromSession.videoId === videoId) {
+      if (videoFromSession && videoFromSession.id.videoId === videoId) {
         video = videoFromSession;
       }
     }
 
+    console.log(video);
     return video;
   }
 

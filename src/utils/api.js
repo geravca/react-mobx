@@ -30,3 +30,9 @@ export function apiCall(keywords) {
     q: keywords
   });
 }
+
+export function getRaiting(videoId) {
+  return gapi.client.youtube.videos.getRating({
+    id: "xxxxx"
+  })
+}

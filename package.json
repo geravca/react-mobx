@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.development --config config/webpack.config.js",
-    "build": "webpack --env.production --progress --config config/webpack.config.js",
-    "test": "jest"
+    "build": "webpack --env.production --progress --config config/webpack.config.js"
   },
   "keywords": [],
   "author": "Gerardo Contreras",
@@ -35,14 +34,10 @@
     "babel-preset-mobx": "^2.0.0",
     "copy-webpack-plugin": "^5.0.3",
     "css-loader": "^2.1.1",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.13.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^24.8.0",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.12.0",
     "postcss-loader": "^3.0.0",
-    "redux-saga-test-plan": "^4.0.0-beta.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.1.2",
@@ -55,10 +50,6 @@
     "verbose": true,
     "moduleNameMapper": {
       "\\.(css|scss|sass)$": "identity-obj-proxy"
-    },
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/testUtils/fileTransformer.js"
     }
   },
   "browserslist": [
