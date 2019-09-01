@@ -28,6 +28,8 @@
     background-color: $color-shark;
     color: $color-white;
     padding: 5px 0;
+    display: flex;
+    justify-content: center;
   }
 
   .title {
