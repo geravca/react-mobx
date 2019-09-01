@@ -1,0 +1,19 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.youtube-container {
+  background-color: $color-black;
+  width: 440px;
+  height: 335px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  iframe {
+    border: none;
+  }
+
+  @include responsive(1200px) {
+    width: 100% !important;
+  }
+}

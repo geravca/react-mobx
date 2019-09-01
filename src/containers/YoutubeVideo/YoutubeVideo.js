@@ -1,50 +1,27 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import styles from './YoutubeVideo.scss';
 import {withRouter} from 'react-router-dom';
 import {inject, observer} from 'mobx-react';
-import {Col, Row} from 'reactstrap';
+import CommentList from '../../components/CommentList/CommentList';
+import VideoDetails from '../../components/VideoDetails/VideoDetails';
 
 @withRouter
 @inject('youTubeStore')
 @observer
 export default class YoutubeVideo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      video: null
-    };
-  }
 
   componentDidMount() {
-    const video = this.props.youTubeStore.getVideo(this.props.id);
-    console.log(video);
-    if (video) {
-      this.setState({video: video});
-    }
+    this.props.youTubeStore.getVideoDetails(this.props.id);
+    this.props.youTubeStore.getComments(this.props.id);
   }
 
   render() {
-    if (this.state.video) {
-      const video = this.state.video.snippet;
+    if (this.props.youTubeStore.currentVideo) {
       return (
-        <div className={classnames(styles.youtubeVideo, 'container')}>
-          <Row>
-            <Col lg="6">
-              <div className={styles.youtubeContainer}>
-                <iframe width="420"
-                        height="315"
-                        src={`https://www.youtube.com/embed/${this.props.id}`}>
-                </iframe>
-              </div>
-            </Col>
-            <Col lg="6">
-              <h3>{video.title}</h3>
-              <p>{video.description}</p>
-            </Col>
-
-          </Row>
+        <div className="container">
+          <VideoDetails id={this.props.id} video={this.props.youTubeStore.currentVideo.snippet}/>
+          <CommentList list={this.props.youTubeStore.videoComments}/>
         </div>
 
       );
@@ -58,7 +35,10 @@ export default class YoutubeVideo extends Component {
 YoutubeVideo.propTypes = {
   id: PropTypes.string.isRequired,
   youTubeStore: PropTypes.shape({
-    getVideo: PropTypes.func,
+    getVideoDetails: PropTypes.func,
+    getComments: PropTypes.func,
+
+    videoComments: PropTypes.array,
     currentVideo: PropTypes.object
   })
 };

@@ -1,38 +1,29 @@
 const API_KEY = 'AIzaSyCUCvIZSwZJmVG928Csm1y5cgWx3yFOuU4';
 
-export const apiTypes = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  PATCH: 'PATCH',
-  DELETE: 'DELETE'
-};
 
-loadYoutubeApi();
-
-export function loadYoutubeApi() {
-  const script = document.createElement('script');
-  script.src = 'https://apis.google.com/js/client.js';
-
-  script.onload = () => {
-    gapi.load('client', () => {
-      gapi.client.setApiKey(API_KEY);
-      gapi.client.load('youtube', 'v3');
-    });
-  };
-  document.body.appendChild(script);
+export function getList(keywords) {
+  return apiCall(`search?maxResults=20&type=video&part=snippet&q=${keywords}`);
 }
 
-export function apiCall(keywords) {
-  return gapi.client.youtube.search.list({
-    part: 'snippet',
-    maxResults: 20,
-    q: keywords
-  });
+export function getCurrentVideo(videoId) {
+  return apiCall(`videos?id=${videoId}&part=statistics,snippet`);
 }
 
-export function getRaiting(videoId) {
-  return gapi.client.youtube.videos.getRating({
-    id: "xxxxx"
+export function getVideoComments(videoId) {
+  return apiCall(`commentThreads?part=snippet&videoId=${videoId}`);
+}
+
+function apiCall(url) {
+  return fetch(`https://www.googleapis.com/youtube/v3/${url}&key=${API_KEY}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
   })
+    .then(function(data) {
+      return data.json();
+    })
+    .catch((error) => {
+      return error.json();
+    });
 }

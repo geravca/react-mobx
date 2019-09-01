@@ -1,9 +1,11 @@
 import {action, observable} from 'mobx';
-import {apiCall} from '../utils/api';
+import {getList, getCurrentVideo, getVideoComments} from '../utils/api';
 
 export default class YouTube {
   @observable list = []; // list of the videos retrieved
   @observable isError = false;
+  @observable currentVideo = null;
+  @observable videoComments = [];
 
   @action
   /**
@@ -13,9 +15,9 @@ export default class YouTube {
   async searchVideos(keywords) {
     if (keywords.length > 0) {
       try {
-        const data = await apiCall(keywords);
+        const data = await getList(keywords);
         this.isError = false;
-        this.list = data.result.items;
+        this.list = data.items;
       } catch (error) {
         this.isError = true;
       }
@@ -25,40 +27,23 @@ export default class YouTube {
   }
 
   @action
-  /**
-   * @name getVideo
-   * @description get video data from given id, if found, store it in session storage, else get data from the storage
-   * @param videoId
-   * @returns {(any | undefined)|*}
-   */
-  getVideo(videoId) {
-    let video = null;
-    if (this.list.length > 0) {
-      // assing the video data to the variable to return
-      video = this.list.find((video) => {
-        return video.id.videoId === videoId;
-      });
-      // store the video in session, no matters if found
-      this.storeVideo(true, video);
-    } else {
-      const videoFromSession = this.storeVideo();
-      // check if the loaded video, if so, has the same given id
-      if (videoFromSession && videoFromSession.id.videoId === videoId) {
-        video = videoFromSession;
-      }
+  async getVideoDetails(videoId) {
+    try {
+      const data = await getCurrentVideo(videoId);
+      this.currentVideo = data.items[0];
+    } catch (e) {
+      this.currentVideo = null;
+      console.log('CURRENT_VIDEO', e);
     }
-
-    console.log(video);
-    return video;
   }
 
-  storeVideo(set = false, data = null) {
-    if (set) {
-      // save the session data
-      sessionStorage.setItem('ytVideo', JSON.stringify(data));
-    } else {
-      // retrieve the session data
-      return JSON.parse(sessionStorage.getItem('ytVideo'));
+  @action async getComments(videoId){
+    try {
+      const data = await getVideoComments(videoId);
+      this.videoComments = data.items;
+    } catch (e) {
+      this.videoComments = [];
+      console.log('COMMENTS', e);
     }
   }
 }
