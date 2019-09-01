@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyApT0TWIpUvJCJVuPrrZ0MzG59uSkS3Zkk';
+const API_KEY = 'AIzaSyCUCvIZSwZJmVG928Csm1y5cgWx3yFOuU4';
 
 export const apiTypes = {
   GET: 'GET',
@@ -9,9 +9,10 @@ export const apiTypes = {
 };
 
 loadYoutubeApi();
+
 export function loadYoutubeApi() {
-  const script = document.createElement("script");
-  script.src = "https://apis.google.com/js/client.js";
+  const script = document.createElement('script');
+  script.src = 'https://apis.google.com/js/client.js';
 
   script.onload = () => {
     gapi.load('client', () => {
@@ -25,8 +26,7 @@ export function loadYoutubeApi() {
 export function apiCall(keywords) {
   return gapi.client.youtube.search.list({
     part: 'snippet',
-    type: 'video',
     maxResults: 20,
-    g: keywords
+    q: keywords
   });
 }

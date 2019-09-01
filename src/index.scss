@@ -1,9 +1,15 @@
 @import './sass/variables';
 @import './sass/mixins';
 
+html, body {
+  overflow: auto;
+  min-height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
+  min-height: 100vh;
   font-family: $font-default;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,5 +17,10 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
 }

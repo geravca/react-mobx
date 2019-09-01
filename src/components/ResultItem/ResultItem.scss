@@ -1,0 +1,102 @@
+@import '../../sass/variables';
+@import '../../sass/mixins';
+
+.result-item {
+  width: 50%;
+  padding: 10px;
+  background-color: transparent !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none !important;
+  cursor: pointer;
+
+  .img-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-black;
+    border: 5px solid $color-black;
+  }
+
+  &:hover {
+    .result-container {
+      -webkit-box-shadow: 0px 7px 6px -1px rgba(0, 0, 0, 0.37);
+      -moz-box-shadow: 0px 7px 6px -1px rgba(0, 0, 0, 0.37);
+      box-shadow: 0px 7px 6px -1px rgba(0, 0, 0, 0.37);
+
+      transform: scale3d(1.05, 1.05, 1);
+      z-index: 10000;
+    }
+  }
+
+  .result-container {
+    overflow: hidden;
+    position: relative;
+    transition: all 200ms;
+    background-color: $colo-french-grey;
+    color: $color-shark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.37);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.37);
+    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.37);
+
+    .card-img {
+      width: 120px;
+      transform-origin: 50% 50%;
+      left: -50%;
+      transform: translate3d(50%, 0%, 0);
+      position: relative;
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .card-text {
+      font-size: 12px;
+      text-overflow: ellipsis
+    }
+  }
+
+  @include responsive(900px) {
+    .card-body {
+      z-index: 1;
+      text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.78);
+    }
+
+    .img-container {
+      max-width: none !important;
+      min-width: auto !important;
+      width: 100%;
+      opacity: 0.2;
+      position: absolute;
+      border: none !important;
+    }
+
+    .result-container {
+      background-color: $color-shark;
+      color: $color-white;
+    }
+
+    .card-img {
+      width: 100% !important;
+    }
+
+  }
+
+  @include responsive(650px) {
+    &.result-item {
+      width: 100%;
+      margin-top: 10px;
+      padding: 0 !important;
+    }
+  }
+}

@@ -2,27 +2,36 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {inject, observer} from 'mobx-react';
 
+import styles from './Results.scss';
+import ResultItem from '../../components/ResultItem/ResultItem';
+
 @inject('youTubeStore')
 @observer
 class Results extends Component {
   constructor(props) {
     super(props);
-    this.renderVideos = this.renderVideos.bind(this);
+    this.renderResults = this.renderResults.bind(this);
+    this.videoClickHandler = this.videoClickHandler.bind(this);
   }
 
-  componentDidMount() {
+  videoClickHandler(id) {
+    console.log('SELECTED ID', id);
   }
 
-  renderVideos() {
-    let videoUi = null;
+  renderResults() {
+    let videoUi = <div className={styles.emptyResults}>Empty Results.</div>;
     const videoList = this.props.youTubeStore.list;
     if (videoList && videoList.length > 0) {
-      if (!videoUi) {
-        videoUi = [];
-      }
-      videoList.forEach((video, index)=>{
-        console.log(JSON.parse(JSON.stringify(video)));
-        videoUi.push(<div key={index}>video</div>);
+      videoUi = [];
+      videoList.forEach((video, index) => {
+        videoUi.push(
+          <ResultItem key={index}
+                      id={video.channelId}
+                      img={video.thumbnails.medium.url}
+                      title={video.title}
+                      description={video.description}
+                      clickHandler={this.videoClickHandler}/>
+        );
       });
     }
     return videoUi;
@@ -30,8 +39,8 @@ class Results extends Component {
 
   render() {
     return (
-      <div>
-        {this.renderVideos()}
+      <div className={styles.results}>
+        {this.renderResults()}
       </div>
     );
   }
