@@ -7,7 +7,7 @@ import ResultItem from '../../components/ResultItem/ResultItem';
 
 @inject('youTubeStore')
 @observer
-class Results extends Component {
+export default class Results extends Component {
   constructor(props) {
     super(props);
     this.renderResults = this.renderResults.bind(this);
@@ -21,12 +21,14 @@ class Results extends Component {
   renderResults() {
     let videoUi = <div className={styles.emptyResults}>Empty Results.</div>;
     const videoList = this.props.youTubeStore.list;
+
     if (videoList && videoList.length > 0) {
       videoUi = [];
       videoList.forEach((video, index) => {
+        //console.log(JSON.parse(JSON.stringify(video)));
         videoUi.push(
           <ResultItem key={index}
-                      id={video.channelId}
+                      id={video.videoId}
                       img={video.thumbnails.medium.url}
                       title={video.title}
                       description={video.description}
@@ -56,4 +58,3 @@ Results.propTypes = {
   }),
 };
 
-export default Results;

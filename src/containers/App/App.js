@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import styles from './App.scss';
-import {inject, observer} from 'mobx-react';
 import {Container} from 'reactstrap';
 import Header from '../../components/Header/Header';
-import YouTubeSearch from '../YouTubeSearch/YouTubeSearch';
-import Results from '../Results/Results';
+import {Route, Switch} from 'react-router-dom';
+import Home from '../../routes/Home/Home';
 
-@inject('appStore')
-@observer
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -19,8 +16,9 @@ class App extends Component {
         <Container className={styles.appContainer}>
           <Header/>
           <Container fluid className={styles.appContents}>
-            <YouTubeSearch/>
-            <Results/>
+            <Switch>
+              <Route path="/" component={Home}/>
+            </Switch>
           </Container>
         </Container>
       </div>
@@ -28,4 +26,3 @@ class App extends Component {
   }
 }
 
-export default App;

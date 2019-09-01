@@ -3,7 +3,7 @@ import Clock from 'react-live-clock';
 import classnames from 'classnames';
 import styles from './Clock.scss';
 
-class ClockTime extends Component {
+export default class ClockTime extends Component {
   constructor(props) {
     super(props);
     this.interval = null;
@@ -39,4 +39,3 @@ class ClockTime extends Component {
   }
 }
 
-export default ClockTime;

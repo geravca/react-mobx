@@ -16,7 +16,7 @@ export default class YouTube {
         this.isError = false;
         this.loading = false;
         this.list = data.result.items.map((video) => {
-          return {...video.snippet};
+          return {...video.snippet, ...video.id};
         });
       } catch (error) {
         this.isError = true;

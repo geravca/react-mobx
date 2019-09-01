@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Input, InputGroup, InputGroupAddon} from 'reactstrap';
 
-class Search extends Component {
+export default class Search extends Component {
   constructor(props) {
     super(props);
 
@@ -57,4 +57,3 @@ Search.propTypes = {
   searchHandler: PropTypes.func.isRequired
 };
 
-export default Search;

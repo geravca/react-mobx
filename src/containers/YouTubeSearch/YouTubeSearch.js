@@ -6,7 +6,7 @@ import {inject, observer} from 'mobx-react';
 
 @inject('appStore', 'youTubeStore')
 @observer
-class YouTubeSearch extends Component {
+export default class YouTubeSearch extends Component {
   constructor(props) {
     super(props);
     this.searchHandler = this.searchHandler.bind(this);
@@ -32,4 +32,3 @@ YouTubeSearch.propTypes = {
   })
 };
 
-export default YouTubeSearch;

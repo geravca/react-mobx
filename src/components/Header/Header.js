@@ -11,7 +11,7 @@ import logo from '../../logo.svg';
 
 @inject('appStore')
 @observer
-class Header extends Component {
+export default class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -46,4 +46,3 @@ Header.propTypes = {
   }),
 };
 
-export default Header;
