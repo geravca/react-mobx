@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const CommentList = (props) => {
   let comments = null;
-  if (props.list.length > 0) {
+  if (props.list && props.list.length > 0) {
     comments = [];
     props.list.forEach((item, index) => {
       const comment = item.snippet.topLevelComment.snippet;
